@@ -30,6 +30,12 @@ export const AuthProvider = ({ children }) => {
 
   // Check if user is authenticated on initial load
   useEffect(() => {
+    // Skip authentication check during server-side rendering/build
+    if (typeof window === 'undefined') {
+      setLoading(false);
+      return;
+    }
+    
     const checkAuth = async () => {
       if (token) {
         try {
